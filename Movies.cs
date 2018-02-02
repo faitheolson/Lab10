@@ -9,19 +9,20 @@ namespace Lab10
     class Movies
     {
         //fields
-        private string movieName;
-        private string genre;
+        private string movieTitle;
+        private string category;
+
 
         //properties
-        public string MovieName
+        public string MovieTitle
         {
-            set { movieName = value; }
-            get { return movieName; }
+            set { movieTitle = value; }
+            get { return movieTitle; }
         }
-        public string Genre
+        public string Category
         {
-            set { genre = value; }
-            get { return genre; }
+            set { category = value; }
+            get { return category; }
         }
 
     }

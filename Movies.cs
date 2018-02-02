@@ -11,6 +11,7 @@ namespace Lab10
         //fields
         private string movieTitle;
         private string category;
+        private string movieDescription;
 
 
         //properties
@@ -24,6 +25,10 @@ namespace Lab10
             set { category = value; }
             get { return category; }
         }
-
+        public string MovieDescription
+        {
+            set { movieDescription = value; }
+            get { return movieDescription; }
+        }
     }
 }

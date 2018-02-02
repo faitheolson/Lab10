@@ -36,24 +36,34 @@ namespace Lab10
         {
             MovieListArray[0].MovieTitle = "Star Wars";
             MovieListArray[0].Category = "Sci- Fi";
+            MovieListArray[0].MovieDescription = "A Sci- Fi tale about Yoda!";
             MovieListArray[1].MovieTitle = "2001 A Space Odessey";
             MovieListArray[1].Category = "Sci- Fi";
+            MovieListArray[1].MovieDescription = "A Sci- Fi tale of HAL.";
             MovieListArray[2].MovieTitle = "A Clockwork Orange";
             MovieListArray[2].Category = "Sci- Fi";
+            MovieListArray[2].MovieDescription = "A Sci- Fi tale of Orange Clocks!";
             MovieListArray[3].MovieTitle = "Close Encounters of the Third Kind";
             MovieListArray[3].Category = "Sci- Fi";
+            MovieListArray[3].MovieDescription = "A Sci- Fi tale of Encounters that are close!";
             MovieListArray[4].MovieTitle = "It";
             MovieListArray[4].Category = "Horror";
+            MovieListArray[4].MovieDescription = "A terrifiying tale of a clown!";
             MovieListArray[5].MovieTitle = "Mulan";
             MovieListArray[5].Category = "Animated";
+            MovieListArray[5].MovieDescription = "A heartwarming tale about Mulan!";
             MovieListArray[6].MovieTitle = "Ants";
             MovieListArray[6].Category = "Animated";
+            MovieListArray[6].MovieDescription = "A heartwarming tale about Ants!";
             MovieListArray[7].MovieTitle = "Storks";
             MovieListArray[7].Category = "Animated";
+            MovieListArray[7].MovieDescription = "A heartwarming tale about Storks!";
             MovieListArray[8].MovieTitle = "The Lobster";
             MovieListArray[8].Category = "Drama";
+            MovieListArray[8].MovieDescription = "A dramatic tale about Lobsters!";
             MovieListArray[9].MovieTitle = "Arrival";
             MovieListArray[9].Category = "Drama";
+            MovieListArray[9].MovieDescription = "A dramatic tale about Arriving!";
         }
 
         private static void CompareInputToData(Movies[] MovieListArray, string UserInput)
@@ -85,18 +95,47 @@ namespace Lab10
             {
                 if (item.Category == UserInput)
                 {
-                    MoviesInCategory.Add(item.MovieTitle);//add matching movies to ArrayList
+                    MoviesInCategory.Add(item);//add matching movie object to ArrayList
                 }
             }
-            MoviesInCategory.Sort();
-            foreach (var item in MoviesInCategory)
+            //MoviesInCategory.Sort();
+            ArrayList TitlesInCategory = new ArrayList();
+            foreach (Movies item in MoviesInCategory)
             {
-                Console.WriteLine(item);
+                TitlesInCategory.Add(item.MovieTitle);
             }
+            TitlesInCategory.Sort();
+            for (int i = 0; i < TitlesInCategory.Count; i++)
+            {
+                Console.WriteLine($"[{i + 1}] {TitlesInCategory[i]}");
+            }
+            //foreach (var item in TitlesInCategory)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            Console.WriteLine("Please enter movie title to see description!");
+            int MovieNumberToDescribe = int.Parse(Console.ReadLine());
+            while (MovieNumberToDescribe > TitlesInCategory.Count)
+            {
+                Console.WriteLine("Please enter a valid number!");
+                MovieNumberToDescribe = int.Parse(Console.ReadLine());
+            }
+            string MovieStringToDescribe = (string)TitlesInCategory[MovieNumberToDescribe-1];
+            foreach (Movies item in MovieListArray)
+            {
+                if (MovieStringToDescribe == item.MovieTitle)
+                {
+                    Console.WriteLine(item.MovieDescription);
+                }
+            }
+
+
         }
+
+
         public static bool ValidateRepeatInput(string Input)
         {
-            while (!Regex.IsMatch(Input,@"^(Y|N)$"))
+            while (!Regex.IsMatch(Input, @"^(Y|N)$"))
             {
                 Console.WriteLine("Please enter a valid input!");
                 Input = Console.ReadLine();
@@ -113,5 +152,6 @@ namespace Lab10
                 return false;
             }
         }
+
     }
 }

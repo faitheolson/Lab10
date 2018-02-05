@@ -12,17 +12,25 @@ namespace Lab10
     {
         static void Main(string[] args)
         {
-            Movies[] MovieListArray = new Movies[10];
-            InitializeObjectsInArray(MovieListArray);
-            DeclareMovieData(MovieListArray);
-            bool repeat = true;
-            while (repeat)
+            try
             {
-                Console.WriteLine("Welcome to the Movie List Application!\nThere are 10 movies in this list.\nWhat category are you interested in?");
-                Console.WriteLine("[1]Sci-Fi\n[2]Animated\n[3]Drama\n[4]Horror");
-                CompareInputToData(MovieListArray, Console.ReadLine());
-                Console.WriteLine("Would you like to search another category? (Y/N)");
-                repeat = ValidateRepeatInput(Console.ReadLine().ToUpper());
+                Movies[] MovieListArray = new Movies[10];
+                InitializeObjectsInArray(MovieListArray);
+                DeclareMovieData(MovieListArray);
+                bool repeat = true;
+                while (repeat)
+                {
+                    Console.WriteLine("Welcome to the Movie List Application!\nThere are 10 movies in this list.\nWhat category are you interested in?");
+                    Console.WriteLine("[1]Sci-Fi\n[2]Animated\n[3]Drama\n[4]Horror");
+                    CompareInputToData(MovieListArray, Console.ReadLine());
+                    Console.WriteLine("Would you like to search another category? (Y/N)");
+                    repeat = Validate.RepeatInput(Console.ReadLine().ToUpper());
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Whoops! Something has gone wrong! Please try again!");
+                throw;
             }
         }
         private static void InitializeObjectsInArray(Movies[] MovieListArray)
@@ -65,14 +73,9 @@ namespace Lab10
             MovieListArray[9].Category = "Drama";
             MovieListArray[9].MovieDescription = "A dramatic tale about Arriving!";
         }
-
         private static void CompareInputToData(Movies[] MovieListArray, string UserInput)
         {
-            while (!Regex.IsMatch(UserInput, @"^(1|2|3|4)$"))
-            {
-                Console.WriteLine("Please enter a valid selection!");
-                UserInput = Console.ReadLine();
-            }
+            Validate.UserInput(UserInput);
             if (UserInput == "1")
             {
                 UserInput = "Sci- Fi";
@@ -98,7 +101,6 @@ namespace Lab10
                     MoviesInCategory.Add(item);//add matching movie object to ArrayList
                 }
             }
-            //MoviesInCategory.Sort();
             ArrayList TitlesInCategory = new ArrayList();
             foreach (Movies item in MoviesInCategory)
             {
@@ -109,11 +111,7 @@ namespace Lab10
             {
                 Console.WriteLine($"[{i + 1}] {TitlesInCategory[i]}");
             }
-            //foreach (var item in TitlesInCategory)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            Console.WriteLine("Please enter movie title to see description!");
+            Console.WriteLine("Please enter a number to see the movie's description!");
             int MovieNumberToDescribe = int.Parse(Console.ReadLine());
             while (MovieNumberToDescribe > TitlesInCategory.Count)
             {
@@ -128,30 +126,7 @@ namespace Lab10
                     Console.WriteLine(item.MovieDescription);
                 }
             }
-
-
         }
-
-
-        public static bool ValidateRepeatInput(string Input)
-        {
-            while (!Regex.IsMatch(Input, @"^(Y|N)$"))
-            {
-                Console.WriteLine("Please enter a valid input!");
-                Input = Console.ReadLine();
-            }
-            if (Input == "Y")
-            {
-                Console.Clear();
-                return true;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("GoodBye!");
-                return false;
-            }
-        }
-
+        
     }
 }
